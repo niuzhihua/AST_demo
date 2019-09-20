@@ -1,0 +1,34 @@
+apply plugin: 'java-library'
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+
+    //用来自动注册 注解处理器
+    implementation 'com.google.auto.service:auto-service:1.0-rc4'
+
+    // 方式1
+    implementation files(org.gradle.internal.jvm.Jvm.current().toolsJar)
+    //  D:\setup\android_studio-3-0-1\jre\lib\tools.jar
+    //   或者
+    //D:\setup\java\jdk\lib\tools.jar
+//    compileOnly files('libs/tools.jar')
+
+    // 核心库：用来解析，分析，修改，生成 java 代码的库 。解析Java源代码，遍历和操作生成的AST(抽象语法树)
+    // parse
+    // analyze
+    // transform
+    // generate
+    implementation 'com.github.javaparser:javaparser-core:3.14.12'
+    // 可选库：JavaSymbolResolver是一个用于Java语法语义解析的库 ，用于分析该AST并能够找到元素与其声明之间的关系（实现基础是JavaParser库）
+    implementation 'com.github.javaparser:javaparser-symbol-solver-core:3.14.12'
+
+
+    implementation project(':api')
+}
+
+
+sourceCompatibility = "1.8"
+targetCompatibility = "1.8"
+tasks.withType(JavaCompile) {
+    options.encoding = "UTF-8"
+}
